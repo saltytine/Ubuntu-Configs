@@ -61,7 +61,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 <details><summary> Linux and Mac </summary>
 
 ```shell
-git clone https://github.com/saltytine/Ubuntu-Configs/nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+git clone https://github.com/saltytine/nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 ```
 
 </details>
