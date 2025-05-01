@@ -21,10 +21,15 @@ map("n", "<leader>q", ":q!<CR>", {})
 -- Fast saving with <leader> and s
 map("n", "<leader>s", ":w<CR>", {})
 -- Move around splits
-map("n", "<k4>", "<C-w>k", { desc = "switch window up (top row)" })
-map("n", "<k5>", "<C-w>h", { desc = "switch window left (top row)" })
-map("n", "<k8>", "<C-w>j", { desc = "switch window down (top row)" })
-map("n", "<k6>", "<C-w>l", { desc = "switch window right (top row)" })
+map("n", "<leader>u", "<C-w>k", { desc = "switch window up (top row)" })
+map("n", "<leader>h", "<C-w>h", { desc = "switch window left (top row)" })
+map("n", "<leader>j", "<C-w>j", { desc = "switch window down (top row)" })
+map("n", "<leader>k", "<C-w>l", { desc = "switch window right (top row)" })
+
+map("n", "<leader>=", "<cmd>resize +2<CR>", { desc = "Increase window height" })
+map("n", "<leader>-", "<cmd>resize -2<CR>", { desc = "Decrease window height" })
+map("n", "<leader>==", "<cmd>vertical resize +5<CR>", { desc = "Increase window width" })
+map("n", "<leader>--", "<cmd>vertical resize -5<CR>", { desc = "Decrease window width" })
 
 -- Reload configuration without restart nvim
 -- Or you don't want to use plenary.nvim, you can use this code
