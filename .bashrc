@@ -135,6 +135,60 @@ v() {
   nvim "$@"
 }
 
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+cdg() {
+    cd "$(git rev-parse --show-toplevel)" || echo "not in a git repo"
+}
+
+gurl() {
+  xdg-open "$(git config --get remote.origin.url | sed 's/git@github.com:/https:\/\/github.com\//' | sed 's/\.git$//')"
+}
+
+gwho() {
+  git log -n 1 --pretty=format:"%an committed %ar" -- "$1"
+}
+
+ipwho() {
+  curl -s "ipinfo.io/$1" | jq
+}
+
+notrash() {
+  rm -rf ~/.local/share/Trash/files/*
+}
+
+whatisthis() {
+  file "$1"
+  stat "$1"
+  mimetype "$1"
+}
+
+quote() {
+  curl -s https://api.quotable.io/random | jq -r '"\(.content)" — \(.author)'
+}
+
+catparty() {
+  for i in {1..20}; do
+    echo "😾 CAT $i 🐾" | lolcat
+    sleep 0.1
+  done
+}
+
+why() {
+  local reasons=(
+    "I said so"
+  )
+
+  while :; do
+    echo -e "\033[1;31mWhy?\033[0m"
+    sleep 1
+    echo -e "\033[1;32mBecause ${reasons[$RANDOM % ${#reasons[@]}]}.\033[0m"
+    sleep 2
+  done
+}
+
 alias neofetch='neofetch --image_backend kitty --source /home/user/Pictures/merusuccubi.png'
 
 export VISUAL=nvim
@@ -142,11 +196,60 @@ export EDITOR=nvim
 
 alias time='date +%T'
 alias p='cd ~/Coding/'
+alias home='cd'
 alias ..='cd ..'
+alias ...='cd ../..'
 alias q='clear'
 alias k='tmux kill-server'
+alias please='sudo $(fc -ln -1)'
+alias update='sudo apt update && sudo apt upgrade -y'
+alias k9='kill -9'
+
+alias h='history'
+alias hg='history | grep'
+
+alias serve='python3 -m http.server'
+alias ip='curl ifconfig.me -w "\n"'
+
+alias n='cd ~/notes'
+alias todo='nvim +$ ~/todo.md'
+alias weather='curl wttr.in'
 
 alias f='/home/user/Coding/scripts/format.sh'
+# tmux \; \
+#   split-window -h -l 80 -- 'btop' \; \
+#   split-window -v -l 20 -- 'kew' \; \
+#   select-pane -L \; \
+#   split-window -v -l 20 -- 'ranger' \; \
+#   select-pane -U \; \
+#   attach
+
+alias roll='/home/user/.local/bin/rolldice.sh'
+# if [[ $# -ne 1 ]]; then
+#     echo "Usage: roll <NdM> (e.g., 2d6, 1d20)"
+#     exit 1
+# fi
+#
+# input="$1"
+#
+# if ! [[ "$input" =~ ^([1-9][0-9]*)[dD]([1-9][0-9]*)$ ]]; then
+#     echo "Format must be NdM, like 2d6 or 1d20. Not your malformed bullshit."
+#     exit 1
+# fi
+#
+# num_dice="${BASH_REMATCH[1]}"
+# num_sides="${BASH_REMATCH[2]}"
+#
+# total=0
+# results=()
+#
+# for ((i=0; i<num_dice; i++)); do
+#     roll=$(( RANDOM % num_sides + 1 ))
+#     results+=("$roll")
+#     (( total += roll ))
+# done
+#
+# echo "Rolled: ${results[*]}  |  Total: $total"
+
 alias gitea='/home/user/Coding/scripts/gitea.sh' # remember to change the branches
 alias github='/home/user/Coding/scripts/github.sh' # remember to change the branches
-alias roll='/home/user/.local/bin/rolldice.sh'
