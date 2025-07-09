@@ -135,7 +135,11 @@ v() {
   nvim "$@"
 }
 
-mkcd() {
+sv() {
+  sudo nvim "$@"
+}
+
+mkc() {
     mkdir -p "$1" && cd "$1"
 }
 
@@ -148,7 +152,11 @@ gurl() {
 }
 
 gwho() {
-  git log -n 1 --pretty=format:"%an committed %ar" -- "$1"
+  if [[ -z "$1" ]]; then
+    git log -n 1 --pretty=format:"%an committed %ar" -- .
+  else
+    git log -n 1 --pretty=format:"%an committed %ar" -- "$1"
+  fi
 }
 
 ipwho() {
@@ -163,10 +171,6 @@ whatisthis() {
   file "$1"
   stat "$1"
   mimetype "$1"
-}
-
-quote() {
-  curl -s https://api.quotable.io/random | jq -r '"\(.content)" — \(.author)'
 }
 
 catparty() {
@@ -188,6 +192,15 @@ why() {
     sleep 2
   done
 }
+
+exec {__bash_trace_fd}>/dev/null
+
+export BASH_XTRACEFD=$__bash_trace_fd
+
+[[ -e /proc/$$/fd/$__bash_trace_fd ]] && \
+    eval "exec {__bash_trace_fd}>&-; exec {__bash_trace_fd}<>/dev/null; BASH_XTRACEFD=$__bash_trace_fd"
+
+shopt -s autocd
 
 alias neofetch='neofetch --image_backend kitty --source /home/user/Pictures/merusuccubi.png'
 
@@ -211,8 +224,9 @@ alias hg='history | grep'
 alias serve='python3 -m http.server'
 alias ip='curl ifconfig.me -w "\n"'
 
-alias n='cd ~/notes'
-alias todo='nvim +$ ~/todo.md'
+alias notes='cd ~/notes-and-guides'
+alias vtodo='nvim +$ ~/todo.md'
+alias todo='cat ~/todo.md'
 alias weather='curl wttr.in'
 
 alias f='/home/user/Coding/scripts/format.sh'
